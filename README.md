@@ -1,27 +1,33 @@
 # srcr
 
-TODO: Write a description here
+A Crystal wrapper for the Speedrun.com API.
 
 ## Installation
 
-TODO: Write installation instructions here
+Add this to your `shard.yml`:
+
+```yaml
+dependencies:
+  srcr:
+    github: TsundereBug/srcr
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Everything can be accessed through the `SRCR` module. For example, `SRCR::Runs.forCategory(c)`
 
 ## Development
 
-TODO: Write development instructions here
+Follow the API Docs and the coding style.
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/srcr/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
+1. Fork it ( https://github.com/TsundereBug/srcr/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) Anthony Cerruti - creator, maintainer
+- [TsundereBug](https://github.com/TsundereBug) Anthony Cerruti - creator, maintainer
