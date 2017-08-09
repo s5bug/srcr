@@ -14,7 +14,7 @@ dependencies:
 
 ## Usage
 
-Everything can be accessed through the `SRCR` module. For example, `SRCR::Runs.forCategory(c)`
+Everything can be accessed through the `SRcr` module. For example, `SRcr::Runs.forCategory(c)`
 
 ## Development
 
