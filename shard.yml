@@ -1,0 +1,13 @@
+name: srcr
+version: 0.1.0
+
+authors:
+  - Anthony Cerruti <aprime2003@gmail.com>
+
+targets:
+  srcr:
+    main: src/srcr.cr
+
+crystal: 0.23.1
+
+license: MIT
