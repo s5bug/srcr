@@ -7,8 +7,8 @@ module SRcr
     JSON.mapping(
       id: {type: String, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      game: {type: String, getter: false, setter: false},
-      level: {type: String, nilable: true, getter: false, setter: false},
+      game: {type: String, getter: false, setter: false}, # TODO Getter
+      level: {type: String, nilable: true, getter: false, setter: false}, # TODO Getter
       category: {type: String, setter: false},
       videos: {type: SRcr::VideoListing, setter: false},
       status: {type: SRcr::RunStatus, setter: false},
@@ -16,7 +16,10 @@ module SRcr
       date: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%d"), setter: false},
       submitted: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%d"), setter: false},
       times: {type: SRcr::TimeSet, setter: false},
-      system: {type: SRcr::System, setter: false}
+      system: {type: SRcr::System, setter: false},
+      splits: {type: SRcr::Resource, nilable: true, setter: false},
+      values: {type: Hash(String, String), getter: false, setter: false}, # TODO Getter
+      links: {type: Array(SRcr::Resource), setter: false}
     )
   end
   class VideoListing

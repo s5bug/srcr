@@ -6,6 +6,12 @@ module SRcr
       uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false}
     )
   end
+  class Resource < Link
+    JSON.mapping(
+      rel: {type: String, setter: false},
+      uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false}
+    )
+  end
   class System
     JSON.mapping(
       platform: {type: String, getter: false, setter: false},
