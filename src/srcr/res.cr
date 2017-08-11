@@ -3,7 +3,7 @@ require "json"
 module SRcr
   class Link
     JSON.mapping(
-      uri: {type: String, setter: false}
+      uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false}
     )
   end
 end
