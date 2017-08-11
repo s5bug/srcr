@@ -5,6 +5,7 @@ module SRcr
   USER_AGENT = "SRcr/" + SRcr::VERSION
   API_ROOT = "https://www.speedrun.com/api/v1/"
   CLIENT = HTTP::Client.new(URI.parse API_ROOT)
+  GAME_CACHE = {} of String => Game
   class StringToURIConverter
     def self.from_json(value : JSON::PullParser) : URI
       URI.parse(value.read_string)
