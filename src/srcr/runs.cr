@@ -15,7 +15,8 @@ module SRcr
       players: {type: Array(SRcr::Player), setter: false},
       date: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%d"), setter: false},
       submitted: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%d"), setter: false},
-      times: {type: SRcr::TimeSet, setter: false}
+      times: {type: SRcr::TimeSet, setter: false},
+      system: {type: SRcr::System, setter: false}
     )
   end
   class VideoListing
@@ -38,7 +39,14 @@ module SRcr
   end
   class TimeSet
     JSON.mapping(
-      primary: {type: Time, converter: SRcr::TimeSetStringConverter, setter: false}
+      primary: {type: Time, converter: SRcr::TimeSetStringConverter, setter: false},
+      primary_t: {type: Float, setter: false},
+      realtime: {type: Time, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
+      realtime_t: {type: Float, nilable: true, setter: false},
+      realtime_noloads: {type: Time, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
+      realtime_noloads_t: {type: Float, nilable: true, setter: false},
+      ingame: {type: Time, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
+      ingame_t: {type: Float, nilable: true, setter: false}
     )
   end
   class TimeSetStringConverter
