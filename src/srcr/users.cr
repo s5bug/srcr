@@ -6,7 +6,8 @@ module SRcr
       id: {type: String, setter: false},
       names: {type: SRcr::UserNameSet, setter: false},
       weblink: {type: String, setter: false},
-      # TODO
+      name_style: {type: SRcr::NameStyle, key: "name-style", setter: false},
+
     )
   end
   class UserNameSet
@@ -14,5 +15,8 @@ module SRcr
       international: {type: String, setter: false},
       japanese: {type: String, nilable: true, setter: false}
     )
+  end
+  class NameStyle
+    # TODO color_from, color_to
   end
 end
