@@ -13,4 +13,30 @@ module SRcr
       value.to_s.to_json(json)
     end
   end
+  class StringToTimeTypeConverter
+    def self.from_json(value : JSON::PullParser) : SRcr::TimeType
+      case value.read_string
+      when "realtime"
+        SRcr::TimeType::Realtime
+      when "realtime_noloads"
+        SRcr::TimeType::RealtimeNoLoads
+      when "ingame"
+        SRcr::TimeType::Ingame
+      when "primary"
+        SRcr::TimeType::Primary
+      end
+    end
+    def self.to_json(value : SRcr::TimeType, json : JSON::Builder)
+      case value
+      when SRcr::TimeType::Primary
+        "primary".to_json(json)
+      when SRcr::TimeType::Realtime
+        "realtime".to_json(json)
+      when SRcr::TimeType::RealtimeNoLoads
+        "realtime_noloads".to_json(json)
+      when SRcr::TimeType::Ingame
+        "ingame".to_json(json)
+      end
+    end
+  end
 end

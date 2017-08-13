@@ -8,8 +8,8 @@ module SRcr
     JSON.mapping(
       id: {type: String, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      game: {type: String, getter: false, setter: false},
-      level: {type: String, nilable: true, getter: false, setter: false},
+      game: {type: String, setter: false, getter: false},
+      level: {type: String, nilable: true, setter: false, getter: false},
       category: {type: String, setter: false},
       videos: {type: SRcr::VideoListing, setter: false},
       status: {type: SRcr::RunStatus, setter: false},
@@ -19,7 +19,7 @@ module SRcr
       times: {type: SRcr::TimeSet, setter: false},
       system: {type: SRcr::System, setter: false},
       splits: {type: SRcr::Resource, nilable: true, setter: false},
-      values: {type: Hash(String, String), getter: false, setter: false}, # TODO Getter
+      values: {type: Hash(String, String), setter: false, getter: false}, # TODO Getter
       links: {type: Array(SRcr::Resource), setter: false}
     )
 
@@ -62,15 +62,39 @@ module SRcr
   end
   class TimeSet
     JSON.mapping(
-      primary: {type: Time::Span, converter: SRcr::TimeSetStringConverter, setter: false},
-      primary_t: {type: Float64, setter: false},
-      realtime: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
-      realtime_t: {type: Float64, nilable: true, setter: false},
-      realtime_noloads: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
-      realtime_noloads_t: {type: Float64, nilable: true, setter: false},
-      ingame: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false},
-      ingame_t: {type: Float64, nilable: true, setter: false}
+      primary: {type: Time::Span, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
+      primary_t: {type: Float64, setter: false, getter: false},
+      realtime: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
+      realtime_t: {type: Float64, nilable: true, setter: false, getter: false},
+      realtime_noloads: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
+      realtime_noloads_t: {type: Float64, nilable: true, setter: false, getter: false},
+      ingame: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
+      ingame_t: {type: Float64, nilable: true, setter: false, getter: false}
     )
+    def [](timetype: SRcr::TimeType) : Time::Span
+      case timetype
+      when SRcr::TimeType::Primary
+        primary
+      when SRcr::TimeType::Realtime
+        realtime
+      when SRcr::TimeType::RealtimeNoLoads
+        realtime_noloads
+      when SRcr::TimeType::Ingame
+        ingame
+      end
+    end
+    def seconds(timetype: SRcr::TimeType) : Float64
+      case timetype
+      when SRcr::TimeType::Primary
+        primary_t
+      when SRcr::TimeType::Realtime
+        realtime_t
+      when SRcr::TimeType::RealtimeNoLoads
+        realtime_noloads_t
+      when SRcr::TimeType::Ingame
+        ingame_t
+      end
+    end
   end
   class TimeSetStringConverter
 
@@ -92,8 +116,8 @@ module SRcr
       end
       t
     end
-    def self.to_json(value : Time, json : JSON::Builder)
-      "null" # TODO Implement a thing
+    def self.to_json(value : Time::Span, json : JSON::Builder)
+      "PT" + value.hours + "H" + value.minutes + "M" + value.seconds + "." + value.milliseconds + "S"
     end
   end
 end

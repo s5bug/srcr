@@ -23,7 +23,11 @@ module SRcr
   class Ruleset
     JSON.mapping(
       show_milliseconds: {type: Bool, key: "show-milliseconds", setter: false},
-      require_verification: {type: Bool, key: "require-verification", setter: false}
+      require_verification: {type: Bool, key: "require-verification", setter: false},
+      require_video: {type: Bool, key: "require-video", setter: false},
+      run_times: {type: Array(SRcr::TimeType), key: "run-times", converter: SRcr::StringToTimeTypeConverter, setter: false},
+      default_time: {type: SRcr::TimeType, key: "default-time", converter: SRcr::StringToTimeTypeConverter, setter: false},
+      emulators_allowed: {type: Bool, key: "emulators-allowed", setter: false}
     )
   end
 end

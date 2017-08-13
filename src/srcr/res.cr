@@ -19,4 +19,10 @@ module SRcr
       region: {type: String, nilable: true, setter: false}
     )
   end
+  enum TimeType
+    Primary
+    Realtime
+    RealtimeNoLoads
+    Ingame
+  end
 end
