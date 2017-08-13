@@ -12,6 +12,13 @@ module SRcr
       uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false}
     )
   end
+  class Image < Link
+    JSON.mapping(
+      uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      width: {type: Int, setter: false},
+      height: {type: Int, setter: false}
+    )
+  end
   class System
     JSON.mapping(
       platform: {type: String, getter: false, setter: false},
