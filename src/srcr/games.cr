@@ -24,6 +24,14 @@ module SRcr
       assets: {type: SRcr::Assets, setter: false},
       links: {type: Array(SRcr::Link), setter: false}
     )
+
+    def self.from_id(id : String) : Game
+      SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/" + id).body, "data")
+    end
+
+    def self.list_from_name(name : String) : Array(Game)
+      Array(SRcr::Run).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=" + URI.escape(name, true)).body, "data")
+    end
   end
   class NameSet
     JSON.mapping(
