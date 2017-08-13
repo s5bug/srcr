@@ -5,7 +5,7 @@ module SRcr
   class Game
     JSON.mapping(
       id: {type: String, setter: false},
-      names: {type: SRcr::NameSet, setter: false},
+      names: {type: SRcr::GameNameSet, setter: false},
       abbreviation: {type: String, nilable: true, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
       released: {type: Time, converter: Time::Format.new("%Y"), setter: false},
@@ -33,7 +33,7 @@ module SRcr
       Array(SRcr::Run).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=" + URI.escape(name, true)).body, "data")
     end
   end
-  class NameSet
+  class GameNameSet
     JSON.mapping(
       international: {type: String, setter: false},
       japanese: {type: String, nilable: true, setter: false},
