@@ -1,5 +1,6 @@
 require "../srcr"
 require "./res"
+require "./games"
 require "json"
 
 module SRcr
@@ -7,8 +8,8 @@ module SRcr
     JSON.mapping(
       id: {type: String, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      game: {type: String, getter: false, setter: false}, # TODO Getter
-      level: {type: String, nilable: true, getter: false, setter: false}, # TODO Getter
+      game: {type: String, getter: false, setter: false},
+      level: {type: String, nilable: true, getter: false, setter: false},
       category: {type: String, setter: false},
       videos: {type: SRcr::VideoListing, setter: false},
       status: {type: SRcr::RunStatus, setter: false},
@@ -24,6 +25,14 @@ module SRcr
 
     def self.from_id(id : String) : Run
       SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "runs/" + id).body, "data")
+    end
+
+    def game : SRcr::Game
+      SRcr::Game.from_id(id)
+    end
+
+    def level : SRcr::Level
+      SRcr::Level.from_id(level)
     end
   end
   class VideoListing
