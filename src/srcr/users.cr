@@ -1,19 +1,22 @@
 require "json"
+require "./res"
 
 module SRcr
   class User
     JSON.mapping(
       id: {type: String, setter: false},
-      names: {type: SRcr::UserNameSet, setter: false},
+      names: {type: SRcr::NameSet, setter: false},
       weblink: {type: String, setter: false},
       name_style: {type: SRcr::NameStyle, key: "name-style", setter: false},
-      role: {type: SRcr::UserRole, converter: SRcr::StringToUserRoleConverter, setter: false}
-    )
-  end
-  class UserNameSet
-    JSON.mapping(
-      international: {type: String, setter: false},
-      japanese: {type: String, nilable: true, setter: false}
+      role: {type: SRcr::UserRole, converter: SRcr::StringToUserRoleConverter, setter: false},
+      signup: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
+      location: {type: SRcr::Location, nilable: true, setter: false},
+      twitch: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      hitbox: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      youtube: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      twitter: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      speedrunslive: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      links: {type: Array(SRcr::Link), setter: false}
     )
   end
   class NameStyle
@@ -24,8 +27,8 @@ module SRcr
   end
   class NameColor
     JSON.mapping(
-      light: {type: Int, converter: SRcr::NameColorToIntConverter, setter: false},
-      dark: {type: Int, converter: SRcr::NameColorToIntConverter, setter: false}
+      light: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false},
+      dark: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false}
     )
   end
   class NameColorToIntConverter
@@ -34,6 +37,48 @@ module SRcr
     end
     def self.to_json(value : Int, json : JSON::Builder)
       ("#" + value.to_s(16)).to_json(json)
+    end
+  end
+  enum UserRole
+    User
+    Banned
+    Trusted
+    Moderator
+    Admin
+    Programmer
+  end
+  class StringToUserRoleConverter
+    def self.from_json(value : JSON::PullParser) : SRcr::UserRole
+      case value.read_string
+      when "user"
+        SRcr::UserRole::User
+      when "banned"
+        SRcr::UserRole::Banned
+      when "trusted"
+        SRcr::UserRole::Trusted
+      when "moderator"
+        SRcr::UserRole::Moderator
+      when "admin"
+        SRcr::UserRole::Admin
+      when "programmer"
+        SRcr::UserRole::Programmer
+      end
+    end
+    def self.to_json(value : SRcr::UserRole, json : JSON::Builder)
+      case value
+      when SRcr::UserRole::User
+        "user".to_json(json)
+      when SRcr::UserRole::Banned
+        "banned".to_json(json)
+      when SRcr::UserRole::Trusted
+        "trusted".to_json(json)
+      when SRcr::UserRole::Moderator
+        "moderator".to_json(json)
+      when SRcr::UserRole::Admin
+        "admin".to_json(json)
+      when SRcr::UserRole::Programmer
+        "programmer".to_json(json)
+      end
     end
   end
 end

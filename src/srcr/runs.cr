@@ -71,7 +71,7 @@ module SRcr
       ingame: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
       ingame_t: {type: Float64, nilable: true, setter: false, getter: false}
     )
-    def [](timetype: SRcr::TimeType) : Time::Span
+    def [](timetype : SRcr::TimeType) : Time::Span
       case timetype
       when SRcr::TimeType::Primary
         primary
@@ -83,7 +83,7 @@ module SRcr
         ingame
       end
     end
-    def seconds(timetype: SRcr::TimeType) : Float64
+    def seconds(timetype : SRcr::TimeType) : Float64
       case timetype
       when SRcr::TimeType::Primary
         primary_t
