@@ -25,5 +25,9 @@ module SRcr
       runs: {type: Array(SRcr::PlacedRun), setter: false},
       links: {type: Array(SRcr::Resource), setter: false}
     )
+
+    def self.from_category(c : SRcr::Category)
+      SRcr::Leaderboard.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "leaderboards/" + c.game.id + "/category/" + c.id).body, "data")
+    end
   end
 end

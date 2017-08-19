@@ -66,4 +66,35 @@ module SRcr
       foreground: {type: SRcr::Image, nilable: true, setter: false}
     )
   end
+
+  class Category
+    JSON.mapping(
+      id: {type: String, setter: false},
+      name: {type: String, setter: false},
+      weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      type: {type: String, setter: false, getter: false}, # TODO getter
+      rules: {type: String, setter: false},
+      players: {type: SRcr::PlayerRules, setter: false},
+      miscellaneous: {type: Bool, setter: false},
+      links: {type: Array(SRcr::Resource), setter: false}
+    )
+
+    def self.from_id(id : String)
+      SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "categories/" + id).body, "data")
+    end
+
+    def game
+      gl = links.select do |l|
+        l.rel == "game"
+      end
+      id = gl.split("/")[-1]
+      SRcr::Game.from_id(id)
+    end
+  end
+  class PlayerRules
+    JSON.mapping(
+      type: {type: String, setter: false, getter: false}, # TODO getter
+      value: {type: Int64, setter: false}
+    )
+  end
 end
