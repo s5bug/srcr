@@ -1,5 +1,6 @@
 require "json"
 require "./res"
+require "./leaderboards"
 
 module SRcr
   class User
@@ -11,13 +12,25 @@ module SRcr
       role: {type: SRcr::UserRole, converter: SRcr::StringToUserRoleConverter, setter: false},
       signup: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
       location: {type: SRcr::Location, nilable: true, setter: false},
-      twitch: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      hitbox: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      youtube: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      twitter: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      speedrunslive: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
+      twitch: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
+      hitbox: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
+      youtube: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
+      twitter: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
+      speedrunslive: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
       links: {type: Array(SRcr::Link), setter: false}
     )
+
+    def self.from_id(id : String) : SRcr::User
+      SRcr::User.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users/" + id).body, "data")
+    end
+
+    def self.search(name : String) : Array(SRcr::User)
+      Array(SRcr::User).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users?lookup=" + URI.escape(name, true)))
+    end
+
+    def personal_bests : Array(SRcr::PlacedRun)
+      Array(SRcr::PlacedRun).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users/" + id + "/personal-bests").body, "data")
+    end
   end
   class NameStyle
     JSON.mapping(

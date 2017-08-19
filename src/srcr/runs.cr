@@ -28,7 +28,7 @@ module SRcr
     end
 
     def game : SRcr::Game
-      SRcr::Game.from_id(id)
+      SRcr::Game.from_id(game)
     end
 
     def level : SRcr::Level

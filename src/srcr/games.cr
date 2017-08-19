@@ -29,7 +29,7 @@ module SRcr
       SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/" + id).body, "data")
     end
 
-    def self.list_from_name(name : String) : Array(Game)
+    def self.search(name : String) : Array(Game)
       Array(SRcr::Run).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=" + URI.escape(name, true)).body, "data")
     end
   end
