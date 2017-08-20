@@ -1,4 +1,5 @@
 require "../srcr"
+require "./users"
 require "json"
 
 module SRcr
@@ -19,7 +20,7 @@ module SRcr
       engines: {type: Array(String), setter: false},
       developers: {type: Array(String), setter: false},
       publishers: {type: Array(String), setter: false},
-      moderators: {type: Hash(String, String), setter: false, getter: false}, # TODO getter
+      moderators: {type: Hash(String, String), setter: false, getter: false},
       created: {type: Time, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
       assets: {type: SRcr::Assets, setter: false},
       links: {type: Array(SRcr::Link), setter: false}
@@ -31,6 +32,14 @@ module SRcr
 
     def self.search(name : String) : Array(Game)
       Array(SRcr::Run).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=" + URI.escape(name, true)).body, "data")
+    end
+
+    def moderators : Hash(SRcr::User, SRcr::ModeratorType)
+      mod_mapped = {} of SRcr::User -> SRcr::ModeratorType
+      moderators.each do |k, v|
+        mod_mapped[SRcr::User.from_id(k)] = SRcr::StringToModeratorTypeConverter.from_string(v)
+      end
+      mod_mapped
     end
   end
   class GameNameSet
@@ -96,5 +105,36 @@ module SRcr
       type: {type: String, setter: false, getter: false}, # TODO getter
       value: {type: Int64, setter: false}
     )
+  end
+  enum ModeratorType
+    SuperModerator
+    Moderator
+  end
+  class StringToModeratorTypeConverter
+    def self.from_json(value : JSON::Builder) : SRcr::ModeratorType
+      self.from_string(value.read_string)
+    end
+
+    def self.from_string(value : String) : SRcr::ModeratorType
+      case value
+      when "moderator"
+        SRcr::ModeratorType::Moderator
+      when "super-moderator"
+        SRcr::ModeratorType::SuperModerator
+      end
+    end
+
+    def self.to_json(value : SRcr::ModeratorType, json : JSON::Builder)
+      self.to_string(value).to_json(json)
+    end
+
+    def self.to_string(value : SRcr::ModeratorType) : String
+      case value
+      when SRcr::ModeratorType::Moderator
+        "moderator"
+      when SRcr::ModeratorType::SuperModerator
+        "super-moderator"
+      end
+    end
   end
 end
