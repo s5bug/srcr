@@ -12,11 +12,11 @@ module SRcr
       role: {type: SRcr::UserRole, converter: SRcr::StringToUserRoleConverter, setter: false},
       signup: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
       location: {type: SRcr::Location, nilable: true, setter: false},
-      twitch: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
-      hitbox: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
-      youtube: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
-      twitter: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
-      speedrunslive: {type: URI, nilable: true, converter: SRcr::StringToURIConverter, setter: false},
+      twitch: {type: SRcr::Link, nilable: true, setter: false},
+      hitbox: {type: SRcr::Link, nilable: true, setter: false},
+      youtube: {type: SRcr::Link, nilable: true, setter: false},
+      twitter: {type: SRcr::Link, nilable: true, setter: false},
+      speedrunslive: {type: SRcr::Link, nilable: true, setter: false},
       links: {type: Array(SRcr::Link), setter: false}
     )
 
