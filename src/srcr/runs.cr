@@ -48,9 +48,9 @@ module SRcr
   end
   class RunStatus
     JSON.mapping(
-      status: String,
-      examiner: String,
-      verify_date: {type: String, key: "verify-date"}
+      status: {type: String, setter: false},
+      examiner: {type: String, nilable: true, setter: false},
+      verify_date: {type: String, nilable: true, key: "verify-date", setter: false}
     )
   end
   class Player
