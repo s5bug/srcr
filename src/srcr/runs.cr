@@ -65,7 +65,7 @@ module SRcr
         user = SRcr::User.from_id(id)
         SRcr.average_colors([user.name_style.color_from.light, user.name_style.color_from.dark, user.name_style.color_to.light, user.name_style.color_from.dark])
       else
-        0xffffff
+        0xffffff_i64
       end
     end
   end
