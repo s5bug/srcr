@@ -1,6 +1,6 @@
-require "json"
 require "./res"
 require "./leaderboards"
+require "json"
 
 module SRcr
   class User
@@ -63,8 +63,6 @@ module SRcr
   class StringToUserRoleConverter
     def self.from_json(value : JSON::PullParser) : SRcr::UserRole
       case value.read_string
-      when "user"
-        SRcr::UserRole::User
       when "banned"
         SRcr::UserRole::Banned
       when "trusted"
@@ -75,12 +73,12 @@ module SRcr
         SRcr::UserRole::Admin
       when "programmer"
         SRcr::UserRole::Programmer
+      else
+        SRcr::UserRole::User
       end
     end
     def self.to_json(value : SRcr::UserRole, json : JSON::Builder)
       case value
-      when SRcr::UserRole::User
-        "user".to_json(json)
       when SRcr::UserRole::Banned
         "banned".to_json(json)
       when SRcr::UserRole::Trusted
@@ -91,6 +89,8 @@ module SRcr
         "admin".to_json(json)
       when SRcr::UserRole::Programmer
         "programmer".to_json(json)
+      else
+        "user".to_json(json)
       end
     end
   end
