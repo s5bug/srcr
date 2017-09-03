@@ -57,6 +57,6 @@ module SRcr
       ag += (c >> 8) & 0xff
       ar += (c >> 16) & 0xff
     end
-    (ab / ca.length) + ((ag / ca.length) << 8) + ((ar / ca.length) << 16)
+    (ab / ca.size) + ((ag / ca.size) << 8) + ((ar / ca.size) << 16)
   end
 end
