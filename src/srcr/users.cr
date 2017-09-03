@@ -40,8 +40,8 @@ module SRcr
   end
   class NameColor
     JSON.mapping(
-      light: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false},
-      dark: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false}
+      light: {type: Int32, converter: SRcr::NameColorToIntConverter, setter: false},
+      dark: {type: Int32, converter: SRcr::NameColorToIntConverter, setter: false}
     )
   end
   class NameColorToIntConverter
