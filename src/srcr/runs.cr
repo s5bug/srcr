@@ -61,7 +61,7 @@ module SRcr
       uri: {type: URI, converter: SRcr::StringToURIConverter, setter: false}
     )
     def color : Int64
-      if id
+      if id = @id
         user = SRcr::User.from_id(id)
         SRcr.average_colors({user.name_style.color_from, user.name_style.color_to})
       else
