@@ -1,6 +1,7 @@
 require "../srcr"
 require "./res"
 require "./games"
+require "./users"
 require "json"
 
 module SRcr
