@@ -92,8 +92,8 @@ module SRcr
       links: {type: Array(SRcr::Resource), setter: false}
     )
 
-    def self.from_id(id : String)
-      SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "categories/" + id).body, "data")
+    def self.from_id(id : String) : SRcr::Category
+      SRcr::Category.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "categories/" + id).body, "data")
     end
 
     def game
