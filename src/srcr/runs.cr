@@ -71,9 +71,10 @@ module SRcr
     def display_name : String
       if id = @id
         SRcr::User.from_id(id).names.international
+      elsif name = @name
+        name
       else
-        @name.not_nil!
-        @name
+        "Unnamed"
       end
     end
   end
