@@ -95,11 +95,11 @@ module SRcr
     )
     def [](timetype : SRcr::TimeType) : Time::Span
       case timetype
-      when SRcr::TimeType::Realtime
+      when SRcr::TimeType::Realtime && !@realtime.nil?
         @realtime
-      when SRcr::TimeType::RealtimeNoLoads
+      when SRcr::TimeType::RealtimeNoLoads && !@realtime_noloads.nil?
         @realtime_noloads
-      when SRcr::TimeType::Ingame
+      when SRcr::TimeType::Ingame && !@ingame.nil?
         @ingame
       else
         @primary
