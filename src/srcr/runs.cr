@@ -72,6 +72,7 @@ module SRcr
       if id = @id
         SRcr::User.from_id(id).names.international
       else
+        @name.not_nil!
         @name
       end
     end
