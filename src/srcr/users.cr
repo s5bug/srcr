@@ -40,13 +40,13 @@ module SRcr
   end
   class NameColor
     JSON.mapping(
-      light: {type: Int32, converter: SRcr::NameColorToIntConverter, setter: false},
-      dark: {type: Int32, converter: SRcr::NameColorToIntConverter, setter: false}
+      light: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false},
+      dark: {type: Int64, converter: SRcr::NameColorToIntConverter, setter: false}
     )
   end
   class NameColorToIntConverter
-    def self.from_json(value : JSON::PullParser) : Int
-      value.read_string[1..-1].to_i(16)
+    def self.from_json(value : JSON::PullParser) : Int64
+      value.read_string[1..-1].to_i(16).to_i64
     end
     def self.to_json(value : Int, json : JSON::Builder)
       ("#" + value.to_s(16)).to_json(json)
