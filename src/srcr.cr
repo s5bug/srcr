@@ -49,5 +49,3 @@ module SRcr
     end
   end
 end
-
-pp SRcr::Run.from_id("zgnw0kjy").game.names.international
