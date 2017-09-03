@@ -69,10 +69,10 @@ module SRcr
       end
     end
     def display_name : String
-      if name = @name
-        name
-      else
+      if id = @id
         SRcr::User.from_id(id).names.international
+      else
+        @name
       end
     end
   end
