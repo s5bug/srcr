@@ -34,8 +34,8 @@ module SRcr
   end
   class NameStyle
     JSON.mapping(
-      color_from: {type: SRcr::NameColor, setter: false},
-      color_to: {type: SRcr::NameColor, setter: false}
+      color_from: {type: SRcr::NameColor, key: "color-from", setter: false},
+      color_to: {type: SRcr::NameColor, key: "color-to", setter: false}
     )
   end
   class NameColor
