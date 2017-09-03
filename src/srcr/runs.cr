@@ -68,6 +68,13 @@ module SRcr
         0xffffff_i64
       end
     end
+    def display_name : String
+      if name = @name
+        name
+      else
+        SRcr::User.from_id(id).names.international
+      end
+    end
   end
   enum PlayerType
     User
