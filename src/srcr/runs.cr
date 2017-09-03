@@ -10,7 +10,7 @@ module SRcr
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
       game: {type: String, setter: false, getter: false},
       level: {type: String, nilable: true, setter: false, getter: false},
-      category: {type: String, setter: false},
+      category: {type: String, setter: false, getter: false},
       videos: {type: SRcr::VideoListing, setter: false},
       status: {type: SRcr::RunStatus, setter: false},
       players: {type: Array(SRcr::Player), setter: false},
@@ -28,11 +28,15 @@ module SRcr
     end
 
     def game : SRcr::Game
-      SRcr::Game.from_id(game)
+      SRcr::Game.from_id(@game)
+    end
+
+    def category : SRcr::Category
+      SRcr::Category.from_id(@category)
     end
 
     def level : SRcr::Level
-      SRcr::Level.from_id(level)
+      SRcr::Level.from_id(@level)
     end
   end
   class VideoListing

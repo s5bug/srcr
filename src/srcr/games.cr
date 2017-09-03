@@ -9,7 +9,7 @@ module SRcr
       names: {type: SRcr::GameNameSet, setter: false},
       abbreviation: {type: String, nilable: true, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      released: {type: Time, converter: Time::Format.new("%Y"), setter: false},
+      released: {type: Int64, setter: false, getter: false},
       release_date: {type: Time, key: "release-date", converter: Time::Format.new("%Y-%m-%d"), setter: false},
       ruleset: {type: SRcr::Ruleset, setter: false},
       romhack: {type: Bool, setter: false}, # Deprecated, will be removed from mapping on release
@@ -21,13 +21,13 @@ module SRcr
       developers: {type: Array(String), setter: false},
       publishers: {type: Array(String), setter: false},
       moderators: {type: Hash(String, String), setter: false, getter: false},
-      created: {type: Time, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
+      created: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false},
       assets: {type: SRcr::Assets, setter: false},
       links: {type: Array(SRcr::Link), setter: false}
     )
 
     def self.from_id(id : String) : Game
-      SRcr::Run.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/" + id).body, "data")
+      SRcr::Game.from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/" + id).body, "data")
     end
 
     def self.search(name : String) : Array(Game)
@@ -35,11 +35,15 @@ module SRcr
     end
 
     def moderators : Hash(SRcr::User, SRcr::ModeratorType)
-      mod_mapped = {} of SRcr::User -> SRcr::ModeratorType
-      moderators.each do |k, v|
+      mod_mapped = {} of SRcr::User => SRcr::ModeratorType
+      @moderators.each do |k, v|
         mod_mapped[SRcr::User.from_id(k)] = SRcr::StringToModeratorTypeConverter.from_string(v)
       end
       mod_mapped
+    end
+
+    def released : Time
+      Time.format("%Y").from_json(@released.to_s)
     end
   end
   class GameNameSet
@@ -54,7 +58,7 @@ module SRcr
       show_milliseconds: {type: Bool, key: "show-milliseconds", setter: false},
       require_verification: {type: Bool, key: "require-verification", setter: false},
       require_video: {type: Bool, key: "require-video", setter: false},
-      run_times: {type: Array(SRcr::TimeType), key: "run-times", converter: SRcr::StringToTimeTypeConverter, setter: false},
+      run_times: {type: Array(SRcr::TimeType), key: "run-times", converter: SRcr::StringArrayToTimeTypeArrayConverter, setter: false},
       default_time: {type: SRcr::TimeType, key: "default-time", converter: SRcr::StringToTimeTypeConverter, setter: false},
       emulators_allowed: {type: Bool, key: "emulators-allowed", setter: false}
     )
@@ -71,7 +75,7 @@ module SRcr
       trophy_2nd: {type: SRcr::Image, key: "trophy-2nd", setter: false},
       trophy_3rd: {type: SRcr::Image, key: "trophy-3rd", setter: false},
       trophy_4th: {type: SRcr::Image, nilable: true, key: "trophy-4th", setter: false},
-      background: {type: SRcr::Image, setter: false},
+      background: {type: SRcr::Image, nilable: true, setter: false},
       foreground: {type: SRcr::Image, nilable: true, setter: false}
     )
   end
