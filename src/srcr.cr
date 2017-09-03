@@ -48,10 +48,10 @@ module SRcr
       values
     end
   end
-  def self.average_colors(ca : Array(Int32)) : Int32
-    ar = 0
-    ag = 0
-    ab = 0
+  def self.average_colors(ca : Array(Int64)) : Int64
+    ar = 0_i64
+    ag = 0_i64
+    ab = 0_i64
     ca.each do |c|
       ab += c & 0xff
       ag += (c >> 8) & 0xff
