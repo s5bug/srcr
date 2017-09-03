@@ -93,19 +93,19 @@ module SRcr
       ingame: {type: Time::Span, nilable: true, converter: SRcr::TimeSetStringConverter, setter: false, getter: false},
       ingame_t: {type: Float64, nilable: true, setter: false, getter: false}
     )
-    def [](timetype : SRcr::TimeType) : Time::Span
+    def [](timetype : SRcr::TimeType) : (Time::Span | Nil)
       case timetype
-      when SRcr::TimeType::Realtime && !@realtime.nil?
+      when SRcr::TimeType::Realtime
         @realtime
-      when SRcr::TimeType::RealtimeNoLoads && !@realtime_noloads.nil?
+      when SRcr::TimeType::RealtimeNoLoads
         @realtime_noloads
-      when SRcr::TimeType::Ingame && !@ingame.nil?
+      when SRcr::TimeType::Ingame
         @ingame
       else
         @primary
       end
     end
-    def seconds(timetype : SRcr::TimeType) : Float64
+    def seconds(timetype : SRcr::TimeType) : (Float64 | Nil)
       case timetype
       when SRcr::TimeType::Realtime
         @realtime_t
