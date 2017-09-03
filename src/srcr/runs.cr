@@ -95,26 +95,26 @@ module SRcr
     )
     def [](timetype : SRcr::TimeType) : Time::Span
       case timetype
-      when SRcr::TimeType::Primary
-        @primary
       when SRcr::TimeType::Realtime
         @realtime
       when SRcr::TimeType::RealtimeNoLoads
         @realtime_noloads
       when SRcr::TimeType::Ingame
         @ingame
+      else
+        @primary
       end
     end
     def seconds(timetype : SRcr::TimeType) : Float64
       case timetype
-      when SRcr::TimeType::Primary
-        @primary_t
       when SRcr::TimeType::Realtime
         @realtime_t
       when SRcr::TimeType::RealtimeNoLoads
         @realtime_noloads_t
       when SRcr::TimeType::Ingame
         @ingame_t
+      else
+        @primary_t
       end
     end
   end
