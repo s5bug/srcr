@@ -53,8 +53,12 @@ module SRcr
       verify_date: {type: Time, nilable: true, key: "verify-date", converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false}
     )
 
-    def examiner : SRcr::User
-      SRcr::User.from_id(@examiner)
+    def examiner : SRcr::User?
+      if e = @examiner
+        SRcr::User.from_id(e)
+      else
+        nil
+      end
     end
   end
   class Player
