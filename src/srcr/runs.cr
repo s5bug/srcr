@@ -49,9 +49,13 @@ module SRcr
   class RunStatus
     JSON.mapping(
       status: {type: String, setter: false},
-      examiner: {type: String, nilable: true, setter: false},
+      examiner: {type: String, nilable: true, getter: false, setter: false},
       verify_date: {type: Time, nilable: true, key: "verify-date", converter: Time::Format.new("%Y-%m-%dT%H:%M:%SZ"), setter: false}
     )
+
+    def examiner : SRcr::User
+      SRcr::User.from_id(@examiner)
+    end
   end
   class Player
     JSON.mapping(
