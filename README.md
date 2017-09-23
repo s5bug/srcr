@@ -14,7 +14,7 @@ dependencies:
 
 ## Usage
 
-Everything can be accessed through the `SRcr` module. For example, `SRcr::Leaderboard.forCategory(c)`
+Everything can be accessed through the `SRcr` module. For example, `SRcr::Leaderboard.from_category(c)`
 
 ## Development
 
