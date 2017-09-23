@@ -90,7 +90,7 @@ module SRcr
       name: {type: String, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
       type: {type: String, setter: false, getter: false},
-      rules: {type: String, setter: false},
+      rules: {type: String, nilable: true, setter: false},
       players: {type: SRcr::PlayerRules, setter: false},
       miscellaneous: {type: Bool, setter: false},
       links: {type: Array(SRcr::Resource), setter: false}
