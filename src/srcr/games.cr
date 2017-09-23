@@ -45,6 +45,10 @@ module SRcr
     def released : Time
       Time.format("%Y").from_json(@released.to_s)
     end
+
+    def categories : Array(SRcr::Category)
+      Array(SRcr::Category).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/#{id}/categories"), "data")
+    end
   end
   class GameNameSet
     JSON.mapping(
