@@ -47,7 +47,7 @@ module SRcr
     end
 
     def categories : Array(SRcr::Category)
-      Array(SRcr::Category).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/#{id}/categories"), "data")
+      Array(SRcr::Category).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games/#{id}/categories").body, "data")
     end
   end
   class GameNameSet
