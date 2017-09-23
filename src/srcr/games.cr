@@ -89,7 +89,7 @@ module SRcr
       id: {type: String, setter: false},
       name: {type: String, setter: false},
       weblink: {type: URI, converter: SRcr::StringToURIConverter, setter: false},
-      type: {type: String, setter: false, getter: false}, # TODO getter
+      type: {type: String, setter: false, getter: false},
       rules: {type: String, setter: false},
       players: {type: SRcr::PlayerRules, setter: false},
       miscellaneous: {type: Bool, setter: false},
@@ -107,6 +107,19 @@ module SRcr
       id = gl.split("/")[-1]
       SRcr::Game.from_id(id)
     end
+
+    def type
+      case @type
+      when "per-level"
+        SRcr::CategoryType::Level
+      else
+        SRcr::CategoryType::Game
+      end
+    end
+  end
+  enum CategoryType
+    Game
+    Level
   end
   class PlayerRules
     JSON.mapping(
