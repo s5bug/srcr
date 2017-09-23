@@ -127,9 +127,10 @@ module SRcr
       value: {type: Int64, setter: false}
     )
   end
-  enum ModeratorType # TODO add notmoderator
+  enum ModeratorType
     SuperModerator
     Moderator
+    NonModerator
   end
   class StringToModeratorTypeConverter
     def self.from_json(value : JSON::Builder) : SRcr::ModeratorType
@@ -140,8 +141,10 @@ module SRcr
       case value
       when "super-moderator"
         SRcr::ModeratorType::SuperModerator
-      else
+      when "moderator"
         SRcr::ModeratorType::Moderator
+      else
+        SRcr::ModeratorType::NonModerator
       end
     end
 
@@ -153,8 +156,10 @@ module SRcr
       case value
       when SRcr::ModeratorType::SuperModerator
         "super-moderator"
-      else
+      when SRcr::ModeratorType::Moderator
         "moderator"
+      else
+        "user"
       end
     end
   end

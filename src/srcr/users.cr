@@ -32,11 +32,62 @@ module SRcr
       Array(SRcr::PlacedRun).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users/" + id + "/personal-bests").body, "data")
     end
   end
+  enum NameStyleType
+    Solid
+    Gradient
+  end
   class NameStyle
     JSON.mapping(
-      color_from: {type: SRcr::NameColor, key: "color-from", setter: false},
-      color_to: {type: SRcr::NameColor, key: "color-to", setter: false}
+      style: {type: NameStyleType, converter: SRcr::StringToNameStyleTypeConverter, setter: false},
+      color: {type: SRcr::NameColor, nilable: true, setter: false, getter:false}
+      color_from: {type: SRcr::NameColor, nilable: true, key: "color-from", setter: false, getter: false},
+      color_to: {type: SRcr::NameColor, nilable: true, key: "color-to", setter: false, getter: false}
     )
+
+    def color_from : SRcr::NameColor
+      case style
+      when SRcr::NameStyleType::Gradient
+        @color_from.not_nil!
+      else
+        @color.not_nil!
+      end
+    end
+
+    def color_to : SRcr::NameColor
+      case style
+      when SRcr::NameStyleType::Gradient
+        @color_to.not_nil!
+      else
+        @color.not_nil!
+      end
+    end
+
+    def color : SRcr::NameColor
+      case style
+      when SRcr::NameStyleType::Solid
+        @color.not_nil!
+      else
+        @color_from.not_nil!
+      end
+    end
+  end
+  class StringToNameStyleTypeConverter
+    def self.from_json(value : JSON::PullParser) : SRcr::NameStyleType
+      case value.read_string
+      when "solid"
+        SRcr::NameStyleType::Solid
+      else
+        SRcr::NameStyleType::Gradient
+      end
+    end
+    def self.to_json(value : SRcr::NameStyleType, json : JSON::Builder)
+      case value
+      when SRcr::NameStyleType::Solid
+        "solid".to_json(json)
+      else
+        "gradient".to_json(json)
+      end
+    end
   end
   class NameColor
     JSON.mapping(
