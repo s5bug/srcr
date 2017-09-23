@@ -39,7 +39,7 @@ module SRcr
   class NameStyle
     JSON.mapping(
       style: {type: NameStyleType, converter: SRcr::StringToNameStyleTypeConverter, setter: false},
-      color: {type: SRcr::NameColor, nilable: true, setter: false, getter:false}
+      color: {type: SRcr::NameColor, nilable: true, setter: false, getter: false}
       color_from: {type: SRcr::NameColor, nilable: true, key: "color-from", setter: false, getter: false},
       color_to: {type: SRcr::NameColor, nilable: true, key: "color-to", setter: false, getter: false}
     )
