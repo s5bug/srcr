@@ -127,7 +127,7 @@ module SRcr
       value: {type: Int64, setter: false}
     )
   end
-  enum ModeratorType
+  enum ModeratorType # TODO add notmoderator
     SuperModerator
     Moderator
   end
@@ -138,10 +138,10 @@ module SRcr
 
     def self.from_string(value : String) : SRcr::ModeratorType
       case value
-      when "moderator"
-        SRcr::ModeratorType::Moderator
       when "super-moderator"
         SRcr::ModeratorType::SuperModerator
+      else
+        SRcr::ModeratorType::Moderator
       end
     end
 
@@ -151,10 +151,10 @@ module SRcr
 
     def self.to_string(value : SRcr::ModeratorType) : String
       case value
-      when SRcr::ModeratorType::Moderator
-        "moderator"
       when SRcr::ModeratorType::SuperModerator
         "super-moderator"
+      else
+        "moderator"
       end
     end
   end
