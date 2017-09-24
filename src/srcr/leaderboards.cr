@@ -19,7 +19,7 @@ module SRcr
       platform: {type: String, nilable: true, setter: false, getter: false}, # TODO getter
       region: {type: String, nilable: true, setter: false, getter: false},
       emulators: {type: Bool, nilable: true, setter: false},
-      video_only: {type: Bool, setter: false},
+      video_only: {type: Bool, nilable: true, setter: false},
       timing: {type: SRcr::TimeType, converter: SRcr::StringToTimeTypeConverter, setter: false},
       values: {type: Hash(String, String), setter: false, getter: false}, # TODO getter
       runs: {type: Array(SRcr::PlacedRun), setter: false},
