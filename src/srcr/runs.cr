@@ -43,7 +43,7 @@ module SRcr
   class VideoListing
     JSON.mapping(
       text: {type: String, nilable: true, setter: false},
-      links: {type: Array(SRcr::Link), setter: false}
+      links: {type: Array(SRcr::Link), nilable: true, setter: false}
     )
   end
   class RunStatus
