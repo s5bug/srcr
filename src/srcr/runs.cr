@@ -12,7 +12,7 @@ module SRcr
       game: {type: String, setter: false, getter: false},
       level: {type: String, nilable: true, setter: false, getter: false},
       category: {type: String, setter: false, getter: false},
-      videos: {type: SRcr::VideoListing, setter: false},
+      videos: {type: SRcr::VideoListing, nilable: true, setter: false},
       status: {type: SRcr::RunStatus, setter: false},
       players: {type: Array(SRcr::Player), setter: false},
       date: {type: Time, nilable: true, converter: Time::Format.new("%Y-%m-%d"), setter: false},
