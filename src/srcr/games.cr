@@ -31,8 +31,6 @@ module SRcr
     end
 
     def self.search(name : String) : Array(Game)
-      pp SRcr::API_ROOT + "games?name=#{URI.escape(name, true)}"
-      pp SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=#{URI.escape(name, true)}").body
       Array(SRcr::Game).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=#{URI.escape(name, true)}").body, "data")
     end
 
