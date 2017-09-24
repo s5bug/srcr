@@ -21,7 +21,7 @@ module SRcr
       system: {type: SRcr::System, setter: false},
       splits: {type: SRcr::Resource, nilable: true, setter: false},
       values: {type: Hash(String, String), setter: false, getter: false}, # TODO Getter
-      links: {type: Array(SRcr::Resource), setter: false}
+      links: {type: Array(SRcr::Resource), nilable: true, setter: false}
     )
 
     def self.from_id(id : String) : Run
