@@ -101,10 +101,10 @@ module SRcr
     end
 
     def game
-      gl = links.select do |l|
+      gl = links.select do |l| # TODO .find
         l.rel == "game"
       end
-      id = gl[0].split("/")[-1]
+      id = gl[0].uri.to_s.split("/")[-1]
       SRcr::Game.from_id(id)
     end
 
