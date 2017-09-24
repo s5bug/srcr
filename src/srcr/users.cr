@@ -25,7 +25,7 @@ module SRcr
     end
 
     def self.search(name : String) : Array(SRcr::User)
-      Array(SRcr::User).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users?lookup=" + URI.escape(name, true)).body)
+      Array(SRcr::User).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "users?lookup=" + URI.escape(name, true)).body, "data")
     end
 
     def personal_bests : Array(SRcr::PlacedRun)
