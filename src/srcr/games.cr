@@ -31,7 +31,7 @@ module SRcr
     end
 
     def self.search(name : String) : Array(Game)
-      Array(SRcr::Game).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=" + URI.escape(name, true)).body, "data")
+      Array(SRcr::Game).from_json(SRcr::CLIENT.get(SRcr::API_ROOT + "games?name=#{URI.escape(name, true)}").body, "data")
     end
 
     def moderators : Hash(SRcr::User, SRcr::ModeratorType)
