@@ -104,7 +104,7 @@ module SRcr
       gl = links.select do |l|
         l.rel == "game"
       end
-      id = gl.split("/")[-1]
+      id = gl[0].split("/")[-1]
       SRcr::Game.from_id(id)
     end
 
